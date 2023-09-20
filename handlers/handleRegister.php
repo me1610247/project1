@@ -3,7 +3,7 @@ session_start();
 include "../core/functions.php";
 include "../core/validations.php";
 $errors=[];
-if(checkRequestMethod("POST")&&checkPostInput('name')){
+if(checkRequestMethod("POST")&&checkPostInput('fname')){
   foreach($_POST as $key => $value){
     $$key =sanitizeInput($value);
   }
@@ -11,12 +11,19 @@ if(checkRequestMethod("POST")&&checkPostInput('name')){
 }
 else
 echo "not supported method";
-if(!requiredVal($name)){
-   $errors[]=  "Name is required";
-}elseif(!minVal($name,3)){
-    $errors[]= "name must be greater than or equal 3 chars";
-}elseif(!maxVal($name,25)){
-    $errors[]= "name must be smaller than or equal 25 chars";
+if(!requiredVal($fname)){
+   $errors[]=  "First Name is required";
+}elseif(!minVal($fname,3)){
+    $errors[]= "First Name must be greater than or equal 3 chars";
+}elseif(!maxVal($lname,25)){
+    $errors[]= "First Name must be smaller than or equal 25 chars";
+}
+if(!requiredVal($lname)){
+   $errors[]=  "Last Name is required";
+}elseif(!minVal($lname,3)){
+    $errors[]= "Last Name must be greater than or equal 3 chars";
+}elseif(!maxVal($lname,25)){
+    $errors[]= "Last Name must be smaller than or equal 25 chars";
 }
 if(!requiredVal($password)){
    $errors[]=  "Password is required";
@@ -35,9 +42,9 @@ if(confirmation($password,$confirmpassword)){
 }
 if(empty($errors)){
     $user_file=fopen("user.csv","a+");
-    $data=[$name,$email,sha1($password),uniqid($id)];
+    $data=[$fname,$lname,$email,uniqid($id),$password];
     fputcsv($user_file,$data);
-    $_SESSION['auth']=[$name,$email,uniqid($id)];
+    $_SESSION['auth']=[$fname,$lname,$email,uniqid($id),$password];
     redirect("../profile.php");
 }else{
     $_SESSION['errors']=$errors;

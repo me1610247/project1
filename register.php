@@ -20,8 +20,12 @@
         ?>    
         <form action="handlers/handleRegister.php" method="POST" class="border p-2">
                 <div class=" border form-group p-3 my-2">
-                    <label for="name">Name :</label>
-                    <input type="text" name="name" class="form-control" id="name">
+                    <label for="fname">First Name :</label>
+                    <input type="text" name="fname" class="form-control" id="fname">
+                </div>
+                <div class=" border form-group p-3 my-2">
+                    <label for="lname">Last Name :</label>
+                    <input type="text" name="lname" class="form-control" id="lname">
                 </div>
                 <div class="form-group p-3 my-2">
                     <label for="email">Email :</label>

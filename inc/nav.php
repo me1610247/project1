@@ -8,6 +8,7 @@
     <li class=""><a href="contact.php">Contact us</a></li>
     <?php if(isset($_SESSION['auth'])):?>
       <li class=""><a href="home.php">Home</a></li>
+      <li class=""><a href="Admin.php">Admin</a></li>
       <?php endif;?>
         <?php if(!isset($_SESSION['auth'])&&(!isset($_SESSION['autho']))):?>
       <li><a href="login.php">Login</a></li>

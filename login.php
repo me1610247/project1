@@ -1,29 +1,49 @@
 <?php
     include 'inc/header.php';
     include 'inc/nav.php';
+    include "core/functions.php";
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        // Read and sanitize the username and password from the form
+        $email=sanitizeInput($_POST['email']);
+        $password = sanitizeInput($_POST['password']);
+    
+        // Open the CSV file
+        $file = fopen('handlers/user.csv', 'r');
+    
+        // Iterate through the CSV file to find a match
+        while (($row = fgetcsv($file)) !== false) {
+            $csvEmail = $row[2];
+            $csvPassword=$row[4];
+    
+            // If the username and password match, redirect to a success page
+            if ($email===$csvEmail&& $password === $csvPassword) {
+                $_SESSION['auth']=[$email,$password];
+                fclose($file);
+                header('Location: home.php');
+                exit();
+            }
+        }
+    
+        // Close the CSV file
+        fclose($file);
+    
+        // If no match is found, display an error message
+        $errorMessage = 'Invalid username or password';
+    }
 ?>
 
 <div class="container">
     <div class="row">
         <div class="col-5 mx-auto my-5">
             <h2 class="border p-2 my-2 text-center">Login</h2> 
-            <?php
-            if(isset($_SESSION['errors'])):
-            foreach($_SESSION['errors'] as $error): ?>
-                <div class="alert alert-danger text-center">
-                    <?php echo $error ;?>
-                </div>
-            <?php 
-        endforeach;
-        unset($_SESSION['errors']);
-    endif;
-        ?>      
-        <form action="handlers/handleLogin.php" method="POST" class="border p-2">
+            <?php if (isset($errorMessage)): ?>
+        <p class="alert alert-danger"><?php echo $errorMessage; ?></p>
+        <?php else:
+            unset($errorMessage);
+            ?>
+    <?php endif; ?>
+ <form action="" method="POST" class="border p-2">
                 
-                <div class="form-group p-3 my-2">
-                    <label for="name">Name :</label>
-                    <input type="text" name="name" class="form-control" id="name">
-                </div>
                 <div class="form-group p-3 my-2">
                     <label for="email">Email :</label>
                     <input type="text" name="email" class="form-control" id="email">

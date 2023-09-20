@@ -1,4 +1,5 @@
 <?php
+    include 'core/functions.php';
     include 'inc/header.php';
     include 'inc/nav.php';
     if(!isset($_SESSION['auth'])){
@@ -19,9 +20,8 @@
     <p>Assisstant : Khalifa</p>
   </div>
         <div class="col-8 mx-auto my-5 border p2">
-            <h2 class="border my-5 p-4 bg-primary p-2">Name : <?php echo ucwords($_SESSION['auth'][0]);?></h2>
-            <div class="border my-5 p-4"><h2 class=" bg-primary p-2">Email : <?php echo $_SESSION['auth'][1];?></h2></div>
-            <h2 class="border my-5 p-4 bg-primary p-2">id : <?php echo $_SESSION['auth'][2];?></h2>
-        </div>
+            <h2 class="border my-5 p-4 bg-success p-2">Email : <?php echo @ucwords($_SESSION['auth'][2]);?></h2>
+</div>
     </div>
 </div>
+
